@@ -3,11 +3,13 @@ import { MovieCardsComponent } from '../movie-cards/movie-cards.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment.development';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MovieCardsComponent, RouterModule],
+  imports: [CommonModule, MovieCardsComponent, RouterModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -15,6 +17,8 @@ export class HomeComponent implements OnInit {
   private _http: HttpClient;
   movies: any[] = [];
   genres: any[] = [];
+  genre!: string;
+  selectedItem: string = '';
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     this._http = http;
@@ -27,6 +31,10 @@ export class HomeComponent implements OnInit {
     this.route.params.subscribe((params) => {
       console.log('Route parameters:', params);
     });
+  }
+
+  getSelectedGenre(): void {
+    console.log('Selected Genre:', this.genre);
   }
 
   getDateRange() {

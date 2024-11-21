@@ -1,2 +1,14 @@
-<p>home works!</p>
+<form #itemForm="ngForm" novalidate>
+  <label for="genres">Select Item:</label>
+  <select
+    id="genres"
+    name="genres"
+    [(ngModel)]="genre"
+    (change)="getSelectedGenre()"
+  >
+    <option *ngFor="let genre of genres" [value]="genre.name">
+      {{ genre.name }}
+    </option>
+  </select>
+</form>
 <app-movie-cards></app-movie-cards>
