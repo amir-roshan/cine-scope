@@ -10,6 +10,15 @@
       {{ genre.name }}
     </option>
   </select>
+  <div class="pagination">
+    <button (click)="previousPage()" [disabled]="currentPage === 1">
+      Previous
+    </button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+      Next
+    </button>
+  </div>
 </form>
 <ul>
   <li *ngFor="let movie of movies">

@@ -18,6 +18,10 @@ export class HomeComponent implements OnInit {
   movies: any[] = [];
   genres: any[] = [];
   genre!: string;
+  selectedGenreId!: number;
+
+  currentPage!: number;
+  totalPages!: number;
 
   BASE_URL: string = environment.BASE_URL + environment.API_KEY;
   SELECTED_GENRE_URL: string =
@@ -41,8 +45,8 @@ export class HomeComponent implements OnInit {
       (genre) => genre.name === this.genre
     );
     if (selectedGenre) {
-      const selectedGenreId = selectedGenre.id;
-      console.log('Selected Genre ID:', selectedGenreId);
+      this.selectedGenreId = selectedGenre.id;
+      console.log('Selected Genre ID:', this.selectedGenreId);
       console.log('Selected Genre:', this.genre);
       this.fetchMovies(this.SELECTED_GENRE_URL + selectedGenre.id.toString());
       console.log(this.SELECTED_GENRE_URL + selectedGenre.id.toString());
@@ -69,11 +73,17 @@ export class HomeComponent implements OnInit {
     console.log(`Date: ${day}/${month}/${year}`);
   }
 
-  async fetchMovies(url: string): Promise<void> {
+  async fetchMovies(url: string, page: number | null = null): Promise<void> {
+    if (page) url += `&page=${page}`;
     this.http.get(url).subscribe({
       next: (response: any) => {
-        this.movies = response.results;
+        const allMovies = response.results;
+        this.movies = allMovies.slice(0, 8);
+        this.currentPage = response.page;
+        this.totalPages = Math.ceil(response.total_results / 8);
         console.log(this.movies);
+        console.log('Current Page', this.currentPage);
+        console.log('Total Pages', this.totalPages);
       },
       error: (error) => {
         console.error('Error fetching movies:', error);
@@ -98,5 +108,31 @@ export class HomeComponent implements OnInit {
         console.log('Genre fetch complete');
       },
     });
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      if (!this.genre) {
+        this.fetchMovies(this.BASE_URL, this.currentPage + 1);
+      } else {
+        this.fetchMovies(
+          this.SELECTED_GENRE_URL + this.selectedGenreId.toString(),
+          this.currentPage + 1
+        );
+      }
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      if (!this.genre) {
+        this.fetchMovies(this.BASE_URL, this.currentPage - 1);
+      } else {
+        this.fetchMovies(
+          this.SELECTED_GENRE_URL + this.selectedGenreId.toString(),
+          this.currentPage - 1
+        );
+      }
+    }
   }
 }
