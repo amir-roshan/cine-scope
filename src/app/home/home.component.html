@@ -11,4 +11,12 @@
     </option>
   </select>
 </form>
-<app-movie-cards></app-movie-cards>
+<ul>
+  <li *ngFor="let movie of movies">
+    <app-movie-cards
+      [poster_path]="movie.poster_path"
+      [overview]="movie.overview"
+      [title]="movie.title"
+    ></app-movie-cards>
+  </li>
+</ul>

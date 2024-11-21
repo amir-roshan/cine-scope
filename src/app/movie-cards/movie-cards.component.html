@@ -1,1 +1,11 @@
-<p>movie-cards works!</p>
+<div class="movie-card">
+  <img
+    [src]="'https://image.tmdb.org/t/p/w500' + poster_path"
+    [alt]="title"
+    class="movie-backdrop"
+  />
+  <div class="movie-details">
+    <h2>{{ title }}</h2>
+    <p>{{ overview }}</p>
+  </div>
+</div>

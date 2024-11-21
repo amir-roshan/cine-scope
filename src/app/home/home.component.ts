@@ -18,14 +18,17 @@ export class HomeComponent implements OnInit {
   movies: any[] = [];
   genres: any[] = [];
   genre!: string;
-  selectedItem: string = '';
+
+  BASE_URL: string = environment.BASE_URL + environment.API_KEY;
+  SELECTED_GENRE_URL: string =
+    environment.BASE_URL + environment.API_KEY + environment.SELECT_GENRE;
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     this._http = http;
   }
 
   ngOnInit(): void {
-    this.fetchMovies();
+    this.fetchMovies(this.BASE_URL);
     this.fetchMovieGenres();
     this.getDateRange();
     this.route.params.subscribe((params) => {
@@ -34,7 +37,18 @@ export class HomeComponent implements OnInit {
   }
 
   getSelectedGenre(): void {
-    console.log('Selected Genre:', this.genre);
+    const selectedGenre = this.genres.find(
+      (genre) => genre.name === this.genre
+    );
+    if (selectedGenre) {
+      const selectedGenreId = selectedGenre.id;
+      console.log('Selected Genre ID:', selectedGenreId);
+      console.log('Selected Genre:', this.genre);
+      this.fetchMovies(this.SELECTED_GENRE_URL + selectedGenre.id.toString());
+      console.log(this.SELECTED_GENRE_URL + selectedGenre.id.toString());
+    } else {
+      console.log('Genre not found');
+    }
   }
 
   getDateRange() {
@@ -52,13 +66,11 @@ export class HomeComponent implements OnInit {
     const month = formatTwoDigits(dt.getMonth() + 1);
     const year = dt.getFullYear();
 
-    alert(`Date: ${day}/${month}/${year}`);
+    console.log(`Date: ${day}/${month}/${year}`);
   }
 
-  async fetchMovies(): Promise<void> {
-    const apiUrl = environment.BASE_URL + environment.API_KEY;
-
-    this.http.get(apiUrl).subscribe({
+  async fetchMovies(url: string): Promise<void> {
+    this.http.get(url).subscribe({
       next: (response: any) => {
         this.movies = response.results;
         console.log(this.movies);

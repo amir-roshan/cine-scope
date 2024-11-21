@@ -1,0 +1,29 @@
+.movie-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 300px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+}
+
+.movie-backdrop {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.movie-details {
+    padding: 15px;
+}
+
+.movie-details h2 {
+    font-size: 1.5rem;
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.movie-details p {
+    font-size: 1rem;
+    color: #555;
+}
