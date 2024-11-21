@@ -1,31 +1,44 @@
-<form #itemForm="ngForm" novalidate>
-  <label for="genres">Select Item:</label>
-  <select
-    id="genres"
-    name="genres"
-    [(ngModel)]="genre"
-    (change)="getSelectedGenre()"
-  >
-    <option *ngFor="let genre of genres" [value]="genre.name">
-      {{ genre.name }}
-    </option>
-  </select>
-  <div class="pagination">
-    <button (click)="previousPage()" [disabled]="currentPage === 1">
-      Previous
-    </button>
-    <span>Page {{ currentPage }} of {{ totalPages }}</span>
-    <button (click)="nextPage()" [disabled]="currentPage === totalPages">
-      Next
-    </button>
-  </div>
-</form>
-<ul>
-  <li *ngFor="let movie of movies">
-    <app-movie-cards
-      [poster_path]="movie.poster_path"
-      [overview]="movie.overview"
-      [title]="movie.title"
-    ></app-movie-cards>
-  </li>
-</ul>
+<div class="container">
+  <form #itemForm="ngForm" novalidate class="form">
+    <label for="genres" class="form-label">Select Genre:</label>
+    <select
+      id="genres"
+      name="genres"
+      [(ngModel)]="genre"
+      (change)="getSelectedGenre()"
+      class="form-select"
+    >
+      <option *ngFor="let genre of genres" [value]="genre.name">
+        {{ genre.name }}
+      </option>
+    </select>
+
+    <div class="pagination">
+      <button
+        class="icon-button"
+        (click)="previousPage()"
+        [disabled]="currentPage === 1"
+      >
+        <i class="fa fa-chevron-left pagination-icon"></i>
+      </button>
+      <span class="page-info">Page {{ currentPage }}</span>
+      <button
+        class="icon-button"
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+      >
+        <i class="fa fa-chevron-right pagination-icon"></i>
+      </button>
+    </div>
+  </form>
+
+  <ul class="movie-list">
+    <li *ngFor="let movie of movies" class="movie-item">
+      <app-movie-cards
+        [poster_path]="movie.poster_path"
+        [overview]="movie.overview"
+        [title]="movie.title"
+      ></app-movie-cards>
+    </li>
+  </ul>
+</div>
