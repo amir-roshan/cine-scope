@@ -13,6 +13,11 @@
     margin-bottom: 20px;
 }
 
+a {
+    text-decoration: none;
+    color: aliceblue;
+}
+
 .nav-button {
     background: linear-gradient(90deg, #007bff, #0056b3);
     border: none;
@@ -21,16 +26,8 @@
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.nav-button a {
-    color: white;
     text-decoration: none;
-    font-size: 1rem;
-    font-weight: bold;
-    letter-spacing: 0.5px;
 }
-
 
 .nav-button:hover {
     background: linear-gradient(90deg, #0056b3, #007bff);
@@ -40,7 +37,7 @@
 
 
 a.active {
-    text-decoration: underline;
+    background: linear-gradient(90deg, #8e9622, #cc9603);
 }
 
 
